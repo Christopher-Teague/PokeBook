@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.java.pokebook.models.Expense;
 import com.java.pokebook.services.ExpenseService;
@@ -38,29 +37,50 @@ public class HomeController {
 	}
 
 	@PostMapping("/expenses")
-	public String createNewExpense(@Valid @ModelAttribute("newExpense")Expense newExpense,BindingResult result) {
+	public String createNewExpense(@Valid @ModelAttribute("newExpense")Expense newExpense, BindingResult result) {
 		if (result.hasErrors()) {
+			System.out.println("FAIL");
 			return "index.jsp";
 		} else {
+			System.out.println("PASS");
 			expenseService.addExpense(newExpense);
 			return "redirect:/pokebook";
 		}
 	}	
+	
+	
+	@GetMapping("/expenses/{id}/edit")
+		public String editExpense( Model model,@ModelAttribute("editExpense")Expense editExpense,@PathVariable("id")Long id) {
+		Expense expense = expenseService.findOne(id);
+		model.addAttribute("editExpense", expense);
+		return "editExpense.jsp";
+	}
 	
 	@GetMapping("/expenses/{id}")
 	public Expense findOneExpense(@PathVariable("id")Long id) {
 		return expenseService.findOne(id);
 	}
 	
-	@PutMapping("/expenses/{id}")
-	public Expense processUpdateExpense(@PathVariable("id") Long id,
-		@RequestParam("name") String name,
-		@RequestParam("vendor") String vendor,
-		@RequestParam("amount") double amount,
-		@RequestParam("description") String description	) {
-		return expenseService.updateExpense(id, name, vendor, amount, description);
-	}
+	@PutMapping("/expenses/{id}/process")
+	public String processEditExpense(@Valid @ModelAttribute("editExpense")Expense editExpense,BindingResult result,@PathVariable("id")Long id) {
+		if (result.hasErrors()) {
+			return "editExpense.jsp";
+		} else {
+			expenseService.addExpense(editExpense);
+			return "redirect:/pokebook";
+		}
+	}	
 	
+	
+//	@PutMapping("/expenses/{id}")
+//	public Expense processUpdateExpense(@PathVariable("id") Long id,
+//		@RequestParam("name") String name,
+//		@RequestParam("vendor") String vendor,
+//		@RequestParam("amount") double amount,
+//		@RequestParam("description") String description	) {
+//		return expenseService.updateExpense(id, name, vendor, amount, description);
+//	}
+//	
 	@DeleteMapping("/expenses/{id}")
 	public void processDeleteExpense(@PathVariable("id")Long id) {
 		expenseService.deleteExpense(id);

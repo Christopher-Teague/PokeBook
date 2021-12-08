@@ -46,7 +46,7 @@ public class ExpenseService {
 		}
 	}
 	
-	public Expense updateExpense(Long id, String name, String vendor, double amount, String description) {
+	public Expense updateExpense(Long id, String name, String vendor, Double amount, String description) {
 		Expense currExpense = this.findOne(id);
 		currExpense.setName(name);
 		currExpense.setVendor(vendor);

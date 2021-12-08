@@ -24,34 +24,12 @@
 	<div class="container mt-5">
 						<!-- HEADER -->
 		<h1>PokeBook</h1>
-        		<!-- ************* TABLE ************* -->
-        <div class="">        	
-			<table class="table table-primary table-striped">
-				<thead>
-				    <tr>				      
-				      <th class="col-4">Expense</th>
-				      <th class="col">Vendor</th>
-				      <th class="col">Amount</th>
-				      <th class="col">Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-				  	<c:forEach var="expense" items="${expenses}">
-					<tr>
-    					<td><c:out value="${expense.name}"/></td>    				
-    					<td><c:out value="${expense.vendor}"/></td>
-    					<td>$<c:out value="${expense.amount}"/></td>
-    					<td><a href="/expenses/${expense.id}/edit">edit</a></td>
-				  	</tr>
-					</c:forEach>
-				</tbody>
-			</table>         
-        </div>	
+
         		<!-- ************* FORM ************* -->
         <div>				
-        	<h4>Track an expense:</h4>
-        	<form:form class="form-control" action="/expenses" method="post" modelAttribute="newExpense">
-        	  	
+        	<h4>Edit expense:</h4>
+        	<form:form class="form-control" action="/expenses/${editExpense.id}/process" method="post" modelAttribute="editExpense">
+        	  	<input type="hidden" name="_method" value="put">
         	  	<div class="mb-3 ">
 			  		<form:label path="name" class="form-label">Expense Name:</form:label>
 			  		<form:errors path="name" class="text-danger"/>

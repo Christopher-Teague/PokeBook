@@ -32,9 +32,9 @@ public class Expense {
 	@Size(min=2, message="Vendor name must be at least 2 characters long")
 	private String vendor;
 	
-	@NotNull
-	@Min(value=1, message="Amount must be at least $1.00")
-	private double amount;
+	@NotNull(message="Amount must be at least $1.00")
+	@Min(value=1)
+	private Double amount;
 	
 	@NotNull
 	@Size(min=2, message="Description must be at least 2 characters long")
@@ -98,11 +98,11 @@ public class Expense {
 		this.vendor = vendor;
 	}
 
-	public double getAmount() {
+	public Double getAmount() {
 		return amount;
 	}
 
-	public void setAmount(double amount) {
+	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
 
