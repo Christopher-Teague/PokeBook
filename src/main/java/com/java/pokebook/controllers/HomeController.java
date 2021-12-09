@@ -37,8 +37,10 @@ public class HomeController {
 	}
 
 	@PostMapping("/expenses")
-	public String createNewExpense(@Valid @ModelAttribute("newExpense")Expense newExpense, BindingResult result) {
+	public String createNewExpense(@Valid @ModelAttribute("newExpense")Expense newExpense, BindingResult result,Model model) {
 		if (result.hasErrors()) {
+			List<Expense> expenses = expenseService.allExpenses();
+			model.addAttribute("expenses", expenses);
 			System.out.println("FAIL");
 			return "index.jsp";
 		} else {
@@ -47,6 +49,14 @@ public class HomeController {
 			return "redirect:/pokebook";
 		}
 	}	
+	
+	
+	@GetMapping("/show/{id}")
+		public String showExpense(Model model, @PathVariable("id")Long id) {
+		 Expense expense = expenseService.findOne(id);
+		 model.addAttribute(expense);
+			return "show.jsp";
+	}
 	
 	
 	@GetMapping("/expenses/{id}/edit")
@@ -72,6 +82,13 @@ public class HomeController {
 	}	
 	
 	
+	@DeleteMapping("/expenses/{id}/delete")
+	public String processDeleteExpense(@PathVariable("id")Long id) {
+		expenseService.deleteExpense(id);
+		return "redirect:/pokebook";
+	}
+	
+	
 //	@PutMapping("/expenses/{id}")
 //	public Expense processUpdateExpense(@PathVariable("id") Long id,
 //		@RequestParam("name") String name,
@@ -81,12 +98,6 @@ public class HomeController {
 //		return expenseService.updateExpense(id, name, vendor, amount, description);
 //	}
 //	
-	@DeleteMapping("/expenses/{id}")
-	public void processDeleteExpense(@PathVariable("id")Long id) {
-		expenseService.deleteExpense(id);
-	}
-	
-	
 //	@PostMapping("/expenses")
 //	public Expense createExpense(
 //			@RequestParam("name") String name,

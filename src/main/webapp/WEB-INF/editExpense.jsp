@@ -26,8 +26,12 @@
 		<h1>PokeBook</h1>
 
         		<!-- ************* FORM ************* -->
-        <div>				
-        	<h4>Edit expense:</h4>
+        <div>	
+        	<div class="d-flex justify-content-between">
+        		<h3>Edit expense:</h3>
+				<a href="/pokebook">Go Back</a>
+			</div>					
+			<h1>${expense.name}</h1>
         	<form:form class="form-control" action="/expenses/${editExpense.id}/process" method="post" modelAttribute="editExpense">
         	  	<input type="hidden" name="_method" value="put">
         	  	<div class="mb-3 ">

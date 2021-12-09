@@ -33,15 +33,22 @@
 				      <th class="col">Vendor</th>
 				      <th class="col">Amount</th>
 				      <th class="col">Actions</th>
+				      <th class="col-1"></th>
 					</tr>
 				</thead>
 				<tbody>
 				  	<c:forEach var="expense" items="${expenses}">
 					<tr>
-    					<td><c:out value="${expense.name}"/></td>    				
+    					<td><a href="/show/${expense.id}"><c:out value="${expense.name}"/></a></td>    				
     					<td><c:out value="${expense.vendor}"/></td>
     					<td>$<c:out value="${expense.amount}"/></td>
-    					<td><a href="/expenses/${expense.id}/edit">edit</a></td>
+	    				<td><a class="btn btn-secondary btn-sm" href="/expenses/${expense.id}/edit">Edit</a></td>
+			    		<td>			<!-- ***** DELETE BUTTON (form)***** -->		
+    						<form action="/expenses/${expense.id}/delete" method="post">
+    							<input type="hidden" name="_method" value="delete">
+    							<input class="btn btn-danger btn-sm" type="submit" value="Delete">  							
+    						</form>		
+    					</td>    		<!-- ******************************* -->				    					  					
 				  	</tr>
 					</c:forEach>
 				</tbody>
@@ -65,7 +72,7 @@
 			  	<div class="mb-3">
 					<form:label path="amount" class="form-label">Amount:</form:label>
 					<form:errors path="amount" class="text-danger"/>					
-			    	<form:input path="amount" type="number" step="0.01" class="form-control"/>	    
+			    	<form:input path="amount" type="number" min="1.00" step="0.01" class="form-control"/>	    
 			  	</div>
 			  	<div class="mb-3">
 			    	<form:label path="description" class="form-label">Description:</form:label>
