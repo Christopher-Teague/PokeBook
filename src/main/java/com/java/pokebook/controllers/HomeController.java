@@ -36,6 +36,9 @@ public class HomeController {
 		return expenseService.allExpenses();
 	}
 
+	
+					// ***** CREATE ***** \\
+	
 	@PostMapping("/expenses")
 	public String createNewExpense(@Valid @ModelAttribute("newExpense")Expense newExpense, BindingResult result,Model model) {
 		if (result.hasErrors()) {
@@ -51,6 +54,8 @@ public class HomeController {
 	}	
 	
 	
+					// ***** RETRIEVE ***** \\
+	
 	@GetMapping("/show/{id}")
 		public String showExpense(Model model, @PathVariable("id")Long id) {
 		 Expense expense = expenseService.findOne(id);
@@ -58,6 +63,13 @@ public class HomeController {
 			return "show.jsp";
 	}
 	
+	@GetMapping("/expenses/{id}")
+	public Expense findOneExpense(@PathVariable("id")Long id) {
+		return expenseService.findOne(id);
+	}
+	
+	
+					// ***** UPDATE ***** \\
 	
 	@GetMapping("/expenses/{id}/edit")
 		public String editExpense( Model model,@ModelAttribute("editExpense")Expense editExpense,@PathVariable("id")Long id) {
@@ -66,10 +78,6 @@ public class HomeController {
 		return "editExpense.jsp";
 	}
 	
-	@GetMapping("/expenses/{id}")
-	public Expense findOneExpense(@PathVariable("id")Long id) {
-		return expenseService.findOne(id);
-	}
 	
 	@PutMapping("/expenses/{id}/process")
 	public String processEditExpense(@Valid @ModelAttribute("editExpense")Expense editExpense,BindingResult result,@PathVariable("id")Long id) {
@@ -81,6 +89,8 @@ public class HomeController {
 		}
 	}	
 	
+				
+					// ***** DELETE ***** \\
 	
 	@DeleteMapping("/expenses/{id}/delete")
 	public String processDeleteExpense(@PathVariable("id")Long id) {
@@ -88,36 +98,7 @@ public class HomeController {
 		return "redirect:/pokebook";
 	}
 	
-	
-//	@PutMapping("/expenses/{id}")
-//	public Expense processUpdateExpense(@PathVariable("id") Long id,
-//		@RequestParam("name") String name,
-//		@RequestParam("vendor") String vendor,
-//		@RequestParam("amount") double amount,
-//		@RequestParam("description") String description	) {
-//		return expenseService.updateExpense(id, name, vendor, amount, description);
-//	}
-//	
-//	@PostMapping("/expenses")
-//	public Expense createExpense(
-//			@RequestParam("name") String name,
-//			@RequestParam("vendor") String vendor,
-//			@RequestParam("amount") double amount,
-//			@RequestParam("description") String description) {
-//		Expense newExpense = new Expense(name, vendor, amount, description);
-//		return expenseService.addExpense(newExpense);		
-//	}
-	
-//    @PutMapping("/expenses/{id}")
-//    public String processEditExpense( @Valid @ModelAttribute("expense")Expense expense,
-//            BindingResult result,@PathVariable("id")Long id) {
-//        if(result.hasErrors()) {
-//            return "index.jsp";
-//        }else {
-//            expenseService.processUpdateExpense(expense);
-//            return "redirect:/dashboard";            
-//        }
-//    }    
+
 	
 	
 	

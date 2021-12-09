@@ -11,12 +11,12 @@ import com.java.pokebook.repositories.ExpenseRepository;
 @Service
 public class ExpenseService {
 
-	// Import ExpenseRepository
+	// IMPORT ExpenseRepository \\
 	
 	// @Autowired
 	// ExpenseRepository expenseRepo;
 	
-			// *^^^* OR *vvv*
+				// ***** OR ***** \\
 	
 	private final ExpenseRepository expenseRepo;
 	
@@ -24,11 +24,12 @@ public class ExpenseService {
 		this.expenseRepo = expenseRepo;
 	}
 	
-	// ********************************
+		// ********************************\\
 	
 	
 	
-	//	******* GET ALL *******
+			//	******* GET ALL ******* \\
+
 	public List<Expense> allExpenses(){
 		return expenseRepo.findAll();
 	}
